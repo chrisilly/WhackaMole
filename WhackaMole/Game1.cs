@@ -6,18 +6,14 @@ using System;
 
 namespace WhackaMole
 {
-    enum GameState
-    {
-        Start,
-        Play,
-        Win,
-        Lose,
-    }
+    enum GameState { Menu, Play, Win, Lose }
 
     public class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        Random random = new Random();
 
         GameState currentGameState;
         GameState GameOver = GameState.Win | GameState.Lose;
@@ -30,8 +26,6 @@ namespace WhackaMole
         Texture2D textureMallet;
 
         Mole[,] moles = new Mole[3, 3];
-        Hole[,] moleHoles = new Hole[3, 3];
-        
 
         public Game1()
         {
@@ -69,13 +63,17 @@ namespace WhackaMole
                 Exit();
 
             // TODO: Add your update logic here
+            foreach (Mole mole in moles)
+            {
+                mole.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LawnGreen); // HoleForeground color is (111, 209, 72)
+            GraphicsDevice.Clear(Color.FromNonPremultiplied(111,209,72,255)); // HoleForeground color is (111, 209, 72)
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
@@ -92,12 +90,14 @@ namespace WhackaMole
         public void PopulateMoles()
         {
             int marginMoles = 250;
+            int positionMoleX = (graphics.PreferredBackBufferWidth / 2) - (2 * textureHoleForeground.Width);
+            int positionMoleY = (graphics.PreferredBackBufferHeight / 2) - textureHoleForeground.Height;
 
             for (int i = 0; i < moles.GetLength(0); i++)
             {
                 for (int j = 0; j < moles.GetLength(1); j++)
                 {
-                    moles[i, j] = new Mole(i*marginMoles, j*marginMoles, textureMole);
+                    moles[i, j] = new Mole(positionMoleX + i * marginMoles, positionMoleY + j * marginMoles, textureMole, textureHole, textureHoleForeground);
                 }
             }
         }
