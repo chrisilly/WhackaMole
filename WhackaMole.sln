@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhackaMole", "WhackaMole\WhackaMole.csproj", "{05ABB290-AE07-492A-91EE-1D9174C37DF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05ABB290-AE07-492A-91EE-1D9174C37DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05ABB290-AE07-492A-91EE-1D9174C37DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05ABB290-AE07-492A-91EE-1D9174C37DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05ABB290-AE07-492A-91EE-1D9174C37DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED891E35-6757-462A-B891-56E645B345D6}
+	EndGlobalSection
+EndGlobal
