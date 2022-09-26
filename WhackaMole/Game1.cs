@@ -6,10 +6,22 @@ using System;
 
 namespace WhackaMole
 {
+    enum GameState
+    {
+        Start,
+        Play,
+        Win,
+        Lose,
+    }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+
+        GameState currentGameState;
+        GameState GameOver = GameState.Win | GameState.Lose;
+        
 
         public Game1()
         {
