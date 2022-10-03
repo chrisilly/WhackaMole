@@ -6,7 +6,7 @@ using System;
 
 namespace WhackaMole
 {
-    enum GameState { Menu, Play, Win, Lose }
+    enum GameState { Menu, Play, GameOver }
 
     public class Game1 : Game
     {
@@ -15,8 +15,11 @@ namespace WhackaMole
 
         Random random = new Random();
 
+        bool debugMode = false;
+
+        KeyboardState keyboardState;
+
         GameState currentGameState;
-        GameState GameOver = GameState.Win | GameState.Lose;
 
         Texture2D textureBackground;
         Texture2D textureMole;
@@ -50,6 +53,7 @@ namespace WhackaMole
 
             // TODO: use this.Content to load your game content here
             textureMole = Content.Load<Texture2D>("mole");
+            textureMoleHit = Content.Load<Texture2D>("mole_KO");
             textureHole = Content.Load<Texture2D>("hole");
             textureHoleForeground = Content.Load<Texture2D>("hole_foreground");
             textureMallet = Content.Load<Texture2D>("mallet");
@@ -63,9 +67,13 @@ namespace WhackaMole
                 Exit();
 
             // TODO: Add your update logic here
+            UpdateDebugMode();
+            keyboardState = Keyboard.GetState();
+
             foreach (Mole mole in moles)
             {
                 mole.Update(gameTime);
+                UpdateMoleTexture(mole);
             }
 
             base.Update(gameTime);
@@ -81,8 +89,14 @@ namespace WhackaMole
             foreach (Mole mole in moles)
             {
                 mole.Draw(spriteBatch);
+                if (debugMode == true)
+                {
+                    Texture2D textureMoleHitbox = new Texture2D(GraphicsDevice, 1, 1);
+                    textureMoleHitbox.SetData(new[] { Color.White });
+                    mole.DrawHitbox(spriteBatch, textureMoleHitbox);
+                }
             }
-
+           
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -99,6 +113,27 @@ namespace WhackaMole
                 {
                     moles[i, j] = new Mole(positionMoleX + i * marginMoles, positionMoleY + j * marginMoles, textureMole, textureHole, textureHoleForeground);
                 }
+            }
+        }
+
+        private void UpdateMoleTexture(Mole mole)
+        {
+            if (mole.GetMoleState() == MoleState.IsHit)
+            {
+                mole.SetMoleTexture(textureMoleHit);
+            }
+            else
+            {
+                mole.SetMoleTexture(textureMole);
+            }
+        }
+
+        // Toggle debug mode
+        public void UpdateDebugMode()
+        {
+            if (keyboardState.IsKeyDown(Keys.H))
+            {
+                debugMode = !debugMode;
             }
         }
     }
