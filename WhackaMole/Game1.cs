@@ -18,6 +18,7 @@ namespace WhackaMole
         bool debugMode = false;
 
         KeyboardState keyboardState;
+        KeyboardState keyboardStatePrevious;
 
         GameState currentGameState;
 
@@ -52,6 +53,7 @@ namespace WhackaMole
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            textureBackground = Content.Load<Texture2D>("background");
             textureMole = Content.Load<Texture2D>("mole");
             textureMoleHit = Content.Load<Texture2D>("mole_KO");
             textureHole = Content.Load<Texture2D>("hole");
@@ -68,6 +70,7 @@ namespace WhackaMole
 
             // TODO: Add your update logic here
             UpdateDebugMode();
+            keyboardStatePrevious = keyboardState;
             keyboardState = Keyboard.GetState();
 
             foreach (Mole mole in moles)
@@ -131,7 +134,7 @@ namespace WhackaMole
         // Toggle debug mode
         public void UpdateDebugMode()
         {
-            if (keyboardState.IsKeyDown(Keys.H))
+            if (keyboardState.IsKeyDown(Keys.H) && keyboardStatePrevious.IsKeyUp(Keys.H))
             {
                 debugMode = !debugMode;
             }
