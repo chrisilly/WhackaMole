@@ -70,7 +70,7 @@ namespace WhackaMole
 
             // Manage hitbox mousclick collision
             if(moleState != MoleState.IsHit)
-                MouseClick();
+                OnMouseClick(); // move to Game1.cs so you can move score there so you can draw it etc
 
             UpdateMoleHitbox();
             UpdateMoleState();
@@ -137,53 +137,7 @@ namespace WhackaMole
                 default:
                     Debug.WriteLine("UpdateMoleState() went out of bounds");
                     break;
-            }
-
-            //if (moleState == MoleState.IsDown)
-            //{
-            //    if (moleStateTimer >= moleStateTimerThreshold)
-            //    {
-            //        moleState = MoleState.GoingUp;
-            //    }
-            //}
-            //else if (moleState == MoleState.GoingUp)
-            //{
-            //    velocityMole = new Vector2(0, random.Next(-4, -2));
-
-            //    if (positionMole.Y <= positionMoleHole.Y - textureMole.Height / 1.5f)
-            //    {
-            //        velocityMole = Vector2.Zero;
-            //        moleState = MoleState.IsUp;
-            //    }
-            //}
-            //else if (moleState == MoleState.IsUp)
-            //{
-            //    if (moleStateTimer >= random.Next(1,3))
-            //    {
-            //        moleState = MoleState.GoingDown;
-            //    }
-            //}
-            //else if (moleState == MoleState.GoingDown)
-            //{
-            //    velocityMole = new Vector2(0, random.Next(4, 8));
-
-            //    if (positionMole.Y >= positionMoleHole.Y)
-            //    {
-            //        velocityMole = Vector2.Zero;
-            //        moleState = MoleState.IsDown;
-            //    }
-            //}
-            //else if (moleState == MoleState.IsHit)
-            //{
-            //    velocityMole = new Vector2(0, 1);
-
-            //    if (positionMole.Y >= positionMoleHole.Y)
-            //    {
-            //        velocityMole = Vector2.Zero;
-            //        moleState = MoleState.IsDown;
-            //    }
-            //}
-            
+            }            
         }
 
         public void UpdateMoleStateTimer()
@@ -208,7 +162,7 @@ namespace WhackaMole
         }
 
         // Check Mousclick moleHitbox Collision
-        public void MouseClick()
+        public void OnMouseClick()
         {
             if (mouseStateCurrent.LeftButton == ButtonState.Pressed && mouseStatePrevious.LeftButton != ButtonState.Pressed)
             {
@@ -216,6 +170,7 @@ namespace WhackaMole
                 {
                     Debug.WriteLine("Hit");
                     moleState = MoleState.IsHit;
+                    //score++
                 }
             }
         }
