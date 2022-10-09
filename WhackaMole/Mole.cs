@@ -25,6 +25,8 @@ namespace WhackaMole
         double moleStateTimer;
         int moleStateTimerThreshold;
 
+        int score = 0;
+
         Texture2D textureHole;
         Texture2D textureHoleForeground;
 
@@ -68,12 +70,12 @@ namespace WhackaMole
             positionMole += velocityMole;
             moleStateTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Manage hitbox mousclick collision
-            if(moleState != MoleState.IsHit)
-                OnMouseClick(); // move to Game1.cs so you can move score there so you can draw it etc
+            // Manage hitbox mousclick collision and update score
+            //if (moleState != MoleState.IsHit)
+            //    OnMouseClick(); // move to Game1.cs so you can move score there so you can draw it etc
 
             UpdateMoleHitbox();
-            UpdateMoleState();
+            UpdateMoleState(gameTime);
         }
 
 
@@ -84,7 +86,7 @@ namespace WhackaMole
             spriteBatch.Draw(textureHoleForeground, positionMoleHole, Color.White);
         }
 
-        public void UpdateMoleState()
+        public void UpdateMoleState(GameTime gameTime)
         {
             UpdateMoleStateTimer(); // This resets the timer when the threshold has passed, yet somehow ManageMole still works? It even works better than if UpdateMoleStateTimer was at the bottom?
 
@@ -161,23 +163,19 @@ namespace WhackaMole
                 spriteBatch.Draw(textureMoleHitbox, moleHitbox, Color.FromNonPremultiplied(155, 255, 61, 122));
         }
 
-        // Check Mousclick moleHitbox Collision
-        public void OnMouseClick()
-        {
-            if (mouseStateCurrent.LeftButton == ButtonState.Pressed && mouseStatePrevious.LeftButton != ButtonState.Pressed)
-            {
-                if (moleHitbox.Contains(Mouse.GetState().Position))
-                {
-                    Debug.WriteLine("Hit");
-                    moleState = MoleState.IsHit;
-                    //score++
-                }
-            }
-        }
-
         public MoleState GetMoleState()
         {
             return moleState;
+        }
+
+        public void SetMoleState(MoleState moleState)
+        {
+            this.moleState = moleState;
+        }
+
+        public Rectangle GetHitbox()
+        {
+            return moleHitbox;
         }
 
         public void SetMoleTexture(Texture2D textureMole)
